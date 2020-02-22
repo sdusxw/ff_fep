@@ -60,18 +60,24 @@ void * alpr_handle(void *arg)
     std::string msg_jpg = std::string(pms->message, pms->msg_len);
     JsonPusher json_pusher;
     json_pusher.initialize();
-    string json_post_url = "http://127.0.0.1/vreid";
+    //string json_post_url = "http://127.0.0.1/vreid";
     string json_ret = json_pusher.push_json(json_post_url, msg_jpg);
     cout << "Josn Return:\n" << json_ret << endl;
     if(pms){free(pms); pms=nullptr;}
 }
-
+string json_post_url;
 //./kafka_consumer -b 172.31.3.1:9092,172.31.3.2:9092,172.31.3.3:9092 -t handledImg-topic -g sjk-beichuang-lpa
 
 int main(int argc, char* argv[]) {
     string brokers;
     string topic_name;
     string group_id;
+    
+    string port = argv[1];
+    
+    json_post_url = "http://127.0.0.1:"+port+"/vreid";
+    
+    cout << "url:\t" << json_post_url << endl;
     
     //初始化curl环境
     curl_global_init(CURL_GLOBAL_ALL);

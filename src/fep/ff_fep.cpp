@@ -30,6 +30,8 @@ typedef struct
 
 bool running = true;
 
+string json_post_url;
+
 concurrent_queue<string> g_queue_jpg_msg;
 
 boost::thread thread_jpg_msg_handler;
@@ -65,7 +67,6 @@ void * alpr_handle(void *arg)
     cout << "Josn Return:\n" << json_ret << endl;
     if(pms){free(pms); pms=nullptr;}
 }
-string json_post_url;
 //./kafka_consumer -b 172.31.3.1:9092,172.31.3.2:9092,172.31.3.3:9092 -t handledImg-topic -g sjk-beichuang-lpa
 
 int main(int argc, char* argv[]) {
